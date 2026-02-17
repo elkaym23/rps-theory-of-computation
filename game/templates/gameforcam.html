@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera Mode</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="crt-frame">
+      <div class="crt-screen">
+        <!-- Title -->
+        <h1 class="pixel-title title-rock">CAMERA MODE</h1>
+
+        <!-- Camera Feed Preview -->
+        <img
+          id="video"
+          src="{{ url_for('video_feed') }}"
+          style="
+            width: 95%;
+            border: 4px solid hotpink;
+            border-radius: 10px;
+            image-rendering: pixelated;
+            margin-bottom: 30px;
+          "
+        />
+
+        <!-- Start Full Animated Camera Game -->
+        <a href="/cam_countdown" class="menu-btn camera"> START CAMERA GAME </a>
+
+        <!-- Back Button -->
+        <a href="/" class="menu-btn" style="margin-top: 20px"> BACK TO MENU </a>
+      </div>
+    </div>
+  </body>
+</html>

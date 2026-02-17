@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Same Device</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .keys-box {
+        margin-top: 30px;
+        padding: 20px;
+        border: 3px solid hotpink;
+        border-radius: 10px;
+        background: rgba(255, 20, 147, 0.1);
+        text-align: left;
+        line-height: 2.2rem;
+        font-size: 1.1rem;
+      }
+
+      .key-line {
+        margin: 10px 0;
+        font-size: 1.2rem;
+      }
+
+      #error-msg {
+        color: #ff3333;
+        font-size: 1.4rem;
+        margin-top: 25px;
+        display: none;
+        text-shadow: 2px 2px 0 black;
+      }
+
+      #retry-buttons {
+        display: none;
+        margin-top: 30px;
+      }
+    </style>
+
+    <script>
+      let p1 = null;
+      let p2 = null;
+      let countdown = 3;
+      let gameStarted = false;
+
+      const p1Keys = { a: "rock", s: "paper", d: "scissors" };
+      const p2Keys = { j: "rock", k: "paper", l: "scissors" };
+
+      document.addEventListener("keydown", (e) => {
+        if (!gameStarted) return;
+
+        let key = e.key.toLowerCase();
+        if (p1Keys[key] && !p1) p1 = p1Keys[key];
+        if (p2Keys[key] && !p2) p2 = p2Keys[key];
+      });
+
+      function updateCountdown() {
+        document.getElementById("count").textContent = countdown;
+      }
+
+      function startCountdown() {
+        gameStarted = true;
+
+        document.getElementById("ready-btn").style.display = "none";
+        document.getElementById("count").style.display = "block";
+
+        updateCountdown();
+
+        let timer = setInterval(() => {
+          countdown--;
+          updateCountdown();
+
+          if (countdown < 0) {
+            clearInterval(timer);
+
+            // --- ERROR HANDLING HERE ---
+            if (!p1 || !p2) {
+              document.getElementById("count").style.display = "none";
+              document.getElementById("error-msg").style.display = "block";
+              document.getElementById("retry-buttons").style.display = "block";
+              return;
+            }
+
+            // No errors → Go to result page
+            window.location.href = `/pvp_result?p1=${p1}&p2=${p2}`;
+          }
+        }, 1000);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="crt-frame">
+      <div class="crt-screen">
+        <h1 class="pixel-title title-rock">PvP SAME TIME MODE</h1>
+
+        <div class="keys-box">
+          <div class="key-line" style="color: #ff69b4">
+            <strong>PLAYER 1 (Left Hand):</strong><br />
+            A = Rock &nbsp;&nbsp;•&nbsp;&nbsp; S = Paper
+            &nbsp;&nbsp;•&nbsp;&nbsp; D = Scissors
+          </div>
+
+          <br />
+
+          <div class="key-line" style="color: #00ff00">
+            <strong>PLAYER 2 (Right Hand):</strong><br />
+            J = Rock &nbsp;&nbsp;•&nbsp;&nbsp; K = Paper
+            &nbsp;&nbsp;•&nbsp;&nbsp; L = Scissors
+          </div>
+        </div>
+
+        <button
+          id="ready-btn"
+          class="menu-btn"
+          style="margin-top: 40px"
+          onclick="startCountdown()"
+        >
+          READY
+        </button>
+
+        <h1
+          id="count"
+          class="pixel-title title-paper"
+          style="display: none; font-size: 4rem; margin-top: 40px"
+        >
+          3
+        </h1>
+
+        <!-- ERROR MESSAGE -->
+        <p id="error-msg">One or both players did not press a key.</p>
+
+        <!-- RETRY BUTTONS -->
+        <div id="retry-buttons">
+          <a href="/pvp_simul" class="menu-btn">TRY AGAIN</a>
+          <a href="/" class="menu-btn camera">MAIN MENU</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

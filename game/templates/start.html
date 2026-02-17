@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Start Screen</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="crt-frame">
+      <div class="crt-screen">
+        <h1 class="pixel-title title-rock">ROCK</h1>
+        <h1 class="pixel-title title-paper">PAPER</h1>
+        <h1 class="pixel-title title-scissor">SCISSORS</h1>
+
+        <div class="pixel-row">
+          <img src="../static/images/rock.png" alt="Rock" class="start_img" />
+          <img src="../static/images/paper.png" alt="Paper" class="start_img" />
+          <img
+            src="../static/images/scissors.png"
+            alt="Scissors"
+            class="start_img"
+          />
+        </div>
+
+        <a class="menu-btn" onclick="window.location.href='/countdown'"
+          ><i class="material-icons"> </i>CLASSIC MODE</a
+        >
+        <a class="menu-btn camera" onclick="window.location.href='/gameforcam'"
+          ><i class="material-icons"> </i>CAMERA MODE</a
+        >
+        <a class="menu-btn camera" onclick="window.location.href='/multiplayer'"
+          ><i class="material-icons"> </i>MULTIPLAYER</a
+        >
+      </div>
+    </div>
+  </body>
+</html>

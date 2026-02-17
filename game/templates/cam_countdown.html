@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Countdown</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="crt-frame">
+      <div class="crt-screen">
+        <h1 id="count-text" class="pixel-title title-rock">ROCK!</h1>
+
+        <div class="pixel-row">
+          <div>
+            <div class="label" style="color: #ff69b4">YOU</div>
+            <img
+              id="player-img"
+              src="/static/images/rock.png"
+              class="countdown-hand"
+            />
+          </div>
+
+          <h2 id="vs" class="pixel-title" style="font-size: 2.3rem">VS</h2>
+
+          <div>
+            <div class="label" style="color: #00ff00">CPU</div>
+            <img
+              id="cpu-img"
+              src="/static/images/rock.png"
+              class="countdown-hand"
+            />
+          </div>
+        </div>
+
+        <h2
+          id="choose"
+          class="pixel-title"
+          style="font-size: 1.4rem; color: #ff69b4"
+        >
+          HOLD YOUR HAND UP!
+        </h2>
+
+        <img
+          id="video"
+          src="{{ url_for('video_feed') }}"
+          style="
+            width: 90%;
+            border: 3px solid hotpink;
+            border-radius: 8px;
+            margin-top: 20px;
+          "
+        />
+
+        <div class="pixel-row" style="gap: 12px; margin-top: 25px">
+          <div class="dot" id="dot3"></div>
+          <div class="dot" id="dot2"></div>
+          <div class="dot" id="dot1"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let count = 3;
+
+      const colors = { 3: "#FF1493", 2: "#FFFF00", 1: "#00FF00", 0: "#FF69B4" };
+      const words = { 3: "ROCK!", 2: "PAPER!", 1: "SCISSORS!", 0: "SHOOT!" };
+      const cpuCycle = ["rock", "paper", "scissors"];
+
+      function updateCountdown() {
+        document.getElementById("count-text").textContent = words[count];
+        document.getElementById("count-text").style.color = colors[count];
+
+        document.getElementById("dot3").classList.toggle("active", count >= 3);
+        document.getElementById("dot2").classList.toggle("active", count >= 2);
+        document.getElementById("dot1").classList.toggle("active", count >= 1);
+
+        let cpuIndex = (3 - count) % 3;
+        document.getElementById(
+          "cpu-img"
+        ).src = `/static/images/${cpuCycle[cpuIndex]}.png`;
+      }
+
+      updateCountdown();
+
+      const timer = setInterval(() => {
+        count -= 1;
+        updateCountdown();
+
+        if (count < 0) {
+          clearInterval(timer);
+
+          fetch("/predict")
+            .then((res) => res.json())
+            .then((data) => {
+              window.location.href = `/cam_result?user=${data.user}&ai=${data.ai}&rock=${data.rock}&paper=${data.paper}&scissors=${data.scissors}`;
+            });
+        }
+      }, 900);
+    </script>
+  </body>
+</html>

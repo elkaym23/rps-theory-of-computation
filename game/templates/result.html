@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Result</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="crt-frame">
+    <div class="crt-screen">
+
+      <!-- RESULT TITLE -->
+      <h1 class="pixel-title title-rock">RESULT</h1>
+
+      <!-- Player & CPU hands -->
+      <div class="pixel-row" style="gap: 40px; margin-top: 10px">
+
+        <!-- PLAYER -->
+        <div>
+          <div class="label" style="color: #ff69b4; margin-bottom: 8px">
+            YOU
+          </div>
+          <img src="/static/images/{{ player }}.png" class="countdown-hand
+                {% if result_text == 'YOU WIN!' %} winner-hand
+                {% elif result_text == 'CPU WINS!' %} loser-hand
+                {% else %} draw-hand {% endif %}" />
+        </div>
+
+        <!-- VS -->
+        <h2 class="pixel-title" style="font-size: 2.5rem; margin-top: 20px">
+          VS
+        </h2>
+
+        <!-- CPU -->
+        <div>
+          <div class="label" style="color: #00ff00; margin-bottom: 8px">
+            CPU
+          </div>
+          <img src="/static/images/{{ cpu }}.png" class="countdown-hand
+                {% if result_text == 'CPU WINS!' %} winner-hand
+                {% elif result_text == 'YOU WIN!' %} loser-hand
+                {% else %} draw-hand {% endif %}" />
+        </div>
+
+      </div>
+
+      <!-- RESULT TEXT -->
+      <h2 class="pixel-title" style="
+            font-size: 2.2rem;
+            margin-top: 40px;
+            color: #ffb6c1;
+            text-align: center;
+          ">
+        {{ result_text }}
+      </h2>
+
+      <h3>
+        <span style="color: yellow;">AI Suggestion:</span><br><br> <strong>{{ predicted_cpu_move }}</strong>
+      </h3>
+
+      <!-- PLAY AGAIN BUTTON -->
+      <div style="margin-top: 50px; display: flex; flex-direction: column; gap: 20px; align-items: center;">
+
+        <!-- PLAY AGAIN -->
+        <a href="/countdown" class="menu-btn">PLAY AGAIN</a>
+
+        <!-- MAIN MENU -->
+        <a href="/" class="menu-btn camera">MAIN MENU</a>
+
+      </div>
+
+    </div> <!-- end crt-screen -->
+  </div> <!-- end crt-frame -->
+</body>
+
+</html>

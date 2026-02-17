@@ -1,0 +1,352 @@
+/* ==============================
+   GLOBAL BACKGROUND 
+   ==============================*/
+
+body {
+  background-color: oklch(0% 0 0);
+
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==============================
+   CRT FRAME 
+   ============================= */
+
+.crt-frame {
+  width: 90%;
+  max-width: 700px;
+  padding: 8px;
+  margin-top: 40px;
+
+  background: linear-gradient(to bottom, #ff1493, #ff69b4);
+  border-radius: 18px;
+
+  box-shadow: 0 0 40px #ff1493, 0 0 80px rgba(255, 20, 147, 0.7),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================
+   INNER BLACK CRT SCREEN
+   ==========================*/
+
+.crt-screen {
+  background: #190f1b;
+  border: 4px solid #ff1493;
+  border-radius: 14px;
+
+  padding: 100px 60px;
+  text-align: center;
+
+  box-shadow: inset 0 0 50px rgba(255, 20, 147, 0.45),
+    inset 0 0 25px rgba(255, 20, 147, 0.25);
+
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 1) 2px,
+    rgba(255, 20, 147, 0.1) 3px,
+    rgba(255, 20, 147, 0.1) 4px
+  );
+
+  background-size: 100% 4px;
+  animation: scanlines 0.12s linear infinite;
+}
+@keyframes scanlines {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 4px;
+  }
+}
+
+@keyframes titleBlink {
+  0%,
+  80%,
+  100% {
+    opacity: 1;
+    text-shadow: 4px 4px 0 #000, 0 0 10px currentColor;
+  }
+  85% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+  90% {
+    opacity: 0.2;
+    text-shadow: none;
+  }
+}
+
+/* =====================================
+   TITLES (ROCK / PAPER / SCISSORS)
+   =====================================*/
+
+.pixel-title {
+  font-size: 4rem;
+  letter-spacing: 4px;
+  line-height: 1.2;
+  margin: 35px 0;
+  font-family: "Press Start 2P", system-ui;
+
+  text-shadow: 4px 4px 0 #000, 0 0 10px currentColor;
+  animation: titleBlink 6s infinite;
+}
+
+.title-rock {
+  color: #ff1493;
+}
+
+.title-paper {
+  color: #ff69b4;
+}
+
+.title-scissor {
+  color: #ffb6c1;
+}
+
+.title-rock {
+  animation-delay: 0s;
+}
+.title-paper {
+  animation-delay: 1.5s;
+}
+.title-scissor {
+  animation-delay: 3s;
+}
+
+/* ==========================
+   PIXEL ICON ROW
+   ========================== */
+
+.pixel-row {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 50px;
+  margin-bottom: 60px;
+}
+
+.pixel-row img {
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+  image-rendering: pixelated;
+  filter: hue-rotate(-50deg) saturate(3);
+  background-color: transparent;
+
+  will-change: transform;
+  animation: logofloat 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes logofloat {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.pixel-row img:nth-child(1) {
+  animation-delay: 0s;
+}
+.pixel-row img:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.pixel-row img:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+/* ===================================
+   BUTTONS (CLASSIC + CAMERA)
+   ===================================*/
+
+.menu-btn {
+  width: 80%;
+  padding: 18px 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  border: 4px solid #ec4899;
+  background: black;
+  color: #ec4899;
+
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-family: "Press Start 2P", system-ui;
+
+  border-radius: 10px;
+
+  box-shadow: 4px 4px 0 #ff1493, 0 0 12px rgba(255, 20, 147, 0.5);
+
+  cursor: pointer;
+
+  margin: 20px auto;
+}
+
+.menu-btn {
+  width: 80%;
+  padding: 18px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  border: 4px solid #ec4899;
+  background: black;
+  color: #ec4899;
+
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-family: "Press Start 2P", system-ui;
+
+  border-radius: 10px;
+
+  box-shadow: 4px 4px 0 #ff1493, 0 0 12px rgba(255, 20, 147, 0.5);
+
+  cursor: pointer;
+  margin: 20px auto;
+
+  transform: translateY(0);
+  transition: transform 0.2s cubic-bezier(0.3, 1.5, 0.5, 1),
+    box-shadow 0.2s ease;
+}
+
+.menu-btn:hover {
+  transform: translateY(-8px);
+  box-shadow: 6px 10px 0 #ff1493, 0 0 20px rgba(255, 20, 147, 0.8);
+}
+
+/* CAMERA BUTTON */
+.menu-btn.camera {
+  border-color: #f472b6;
+  color: #f472b6;
+  box-shadow: 4px 4px 0 #ff69b4, 0 0 12px rgba(255, 105, 180, 0.5);
+}
+
+.menu-btn.camera:hover {
+  transform: translateY(-8px);
+  box-shadow: 6px 10px 0 #ff69b4, 0 0 20px rgba(255, 105, 180, 0.8);
+}
+
+.menu-btn.camera {
+  border-color: #f472b6;
+  color: #f472b6;
+
+  box-shadow: 4px 4px 0 #ff69b4, 0 0 12px rgba(255, 105, 180, 0.5);
+}
+
+.menu-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ===============================
+   COUNTDOWN ANIMATIONS RESTORE
+   =============================== */
+
+#count-text {
+  text-shadow: 4px 4px 0 black;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+#vs {
+  animation: vsPulse 1s infinite ease-in-out;
+}
+
+@keyframes vsPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.25) rotate(5deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+#choose {
+  animation: fadePulse 1.5s infinite;
+}
+
+@keyframes fadePulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.countdown-hand {
+  width: 95px;
+  image-rendering: pixelated;
+  transition: transform 0.4s ease-in-out;
+}
+
+.countdown-hand-small {
+  width: 55px;
+  image-rendering: pixelated;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border: 2px solid hotpink;
+  border-radius: 50%;
+  opacity: 0.3;
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: hotpink;
+  box-shadow: 0 0 10px hotpink;
+  opacity: 1;
+}
+
+/* ===========================================
+   WINNER / LOSER VISUAL EFFECTS
+   =========================================== */
+
+.winner-hand {
+  transform: scale(1.3);
+  filter: brightness(1.5) drop-shadow(0 0 15px hotpink);
+  transition: all 0.4s ease-in-out;
+}
+
+.loser-hand {
+  transform: scale(0.7);
+  opacity: 0.4;
+  filter: grayscale(100%) blur(1px);
+  transition: all 0.4s ease-in-out;
+}
+
+.tie-hand {
+  transform: scale(1);
+  opacity: 0.9;
+}

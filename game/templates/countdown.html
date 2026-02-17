@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Countdown</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="crt-frame">
+    <div class="crt-screen">
+
+      <h1 id="count-text" class="pixel-title title-rock">ROCK!</h1>
+
+      <div class="pixel-row">
+        <div>
+          <div id="you-label" class="label" style="color: #ff69b4">YOU</div>
+          <div id="player-hand" class="hand">
+            <img id="player-img" src="/static/images/rock.png" class="countdown-hand" />
+          </div>
+        </div>
+
+        <h2 id="vs" class="pixel-title title-rock" style="font-size: 2.3rem">VS</h2>
+
+        <div>
+          <div id="cpu-label" class="label" style="color: #00ff00">Computer</div>
+          <div id="cpu-hand" class="hand">
+            <img id="cpu-img" src="/static/images/rock.png" class="countdown-hand" />
+          </div>
+        </div>
+      </div>
+
+      <h2 id="choose" class="pixel-title" style="font-size: 1.4rem; color: #ff69b4">
+        CHOOSE YOUR WEAPON!
+      </h2>
+
+      <!-- WEAPON BUTTONS WRAPPED HERE -->
+      <div id="weapon-buttons" class="pixel-row" style="gap: 25px; margin-bottom: 20px;">
+        <button class="menu-btn" onclick="selectChoice('rock')">
+          <img src="/static/images/rock.png" class="countdown-hand-small" /> ROCK
+        </button>
+
+        <button class="menu-btn" onclick="selectChoice('paper')">
+          <img src="/static/images/paper.png" class="countdown-hand-small" /> PAPER
+        </button>
+
+        <button class="menu-btn" onclick="selectChoice('scissors')">
+          <img src="/static/images/scissors.png" class="countdown-hand-small" /> SCISSORS
+        </button>
+      </div>
+
+      <!-- DOTS -->
+      <div class="pixel-row" style="gap: 12px; margin-top: 10px">
+        <div class="dot" id="dot3"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot1"></div>
+      </div>
+
+      <!-- ERROR -->
+      <p id="error-msg" style="
+        color: #ff3333;
+        font-size: 1.2rem;
+        margin-top: 25px;
+        display: none;
+        text-shadow: 2px 2px 0 black;">
+        You did not select an option.
+      </p>
+
+      <!-- RETRY BUTTONS -->
+      <div id="retry-buttons" style="display: none; margin-top: 30px;">
+        <a href="/countdown" class="menu-btn">PLAY AGAIN</a>
+        <a href="/" class="menu-btn camera">MAIN MENU</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let count = 3;
+
+    const countText = document.getElementById("count-text");
+    const playerHand = document.getElementById("player-hand");
+    const cpuHand = document.getElementById("cpu-hand");
+    const playerImg = document.getElementById("player-img");
+    const cpuImg = document.getElementById("cpu-img");
+
+    const colors = { 3: "#FF1493", 2: "#FFFF00", 1: "#00FF00", 0: "#FF69B4" };
+    const words = { 3: "ROCK!", 2: "PAPER!", 1: "SCISSORS!", 0: "SHOOT!" };
+    const cpuCycle = ["rock", "paper", "scissors"];
+
+    function updateCountdown() {
+      countText.textContent = words[count];
+      countText.style.color = colors[count];
+      countText.style.textShadow = `4px 4px 0 black, 0 0 25px ${colors[count]}`;
+
+      document.getElementById("dot3").classList.toggle("active", count >= 3);
+      document.getElementById("dot2").classList.toggle("active", count >= 2);
+      document.getElementById("dot1").classList.toggle("active", count >= 1);
+
+      let bounce = count % 2 === 0 ? "translateY(-20px)" : "translateY(0)";
+      playerHand.style.transform = bounce;
+      cpuHand.style.transform = bounce;
+
+      let cpuIndex = (3 - count) % 3;
+      cpuImg.src = `/static/images/${cpuCycle[cpuIndex]}.png`;
+    }
+
+    updateCountdown();
+
+    const timer = setInterval(() => {
+      count -= 1;
+      updateCountdown();
+
+      if (count < 0) {
+        clearInterval(timer);
+
+        if (!window.finalChoice) {
+          document.getElementById("error-msg").style.display = "block";
+          document.getElementById("retry-buttons").style.display = "block";
+
+          // HIDE WEAPON BUTTONS
+          document.getElementById("weapon-buttons").style.display = "none";
+          return;
+        }
+
+        window.location.href = `/result?player=${window.finalChoice}`;
+      }
+    }, 900);
+
+    function selectChoice(choice) {
+      window.finalChoice = choice;
+
+      if (choice === "rock") playerImg.src = "/static/images/rock.png";
+      if (choice === "paper") playerImg.src = "/static/images/paper.png";
+      if (choice === "scissors") playerImg.src = "/static/images/scissors.png";
+    }
+  </script>
+</body>
+
+</html>

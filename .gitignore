@@ -1,0 +1,8 @@
+RPS-output.md
+RPS-output.txt
+.venv/
+game/__pycache__
+
+.env
+__pycache__/
+*.pyc
