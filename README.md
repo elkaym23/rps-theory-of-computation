@@ -23,3 +23,18 @@ live host link, click it and you should be set.
 
 - Make sure your webcam is connected before starting camera mode.
 - If TensorFlow installation fails, ensure you're using **Python 3.10.11**.
+
+
+## Project Context (Team Project)
+
+This project was completed as a **group project** for **Theory of Computation**.
+
+### My Contributions
+I worked on:
+- Classic Mode (player vs CPU)
+- Countdown screen and logic
+- Result screen and win/lose/draw logic
+- Debugging and general fixes across the flow
+
+### Attribution
+This repository is my portfolio copy of the team project. Other features (e.g., camera mode and ML model integration) were developed collaboratively by the group.
